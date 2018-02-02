@@ -1,0 +1,113 @@
+Code book for transforming raw data into tidy data.
+The data set that this code book pertains to is located in the tidy_data.txt file of this repository.
+
+See the README.md file of this repository for background information on this data set.
+
+The structure of the data set is described in the Data section, its variables are listed in the Variables section, and the transformations that were carried out to obtain the data set based on the source data are presented in the Transformations section.
+
+Data
+The tidy_data.txt data file is a text file, containing space-separated values.
+
+
+Variables
+There are 180 observations of 81 variables. Each row contains, for a given subject and activity, averaged signal measurements.
+
+Identifiers
+Subject identifier, integer, ranges from 1 to 30.
+Activity identifier, string with 6 possible values:
+
+WALKING: subject was walking
+WALKING_UPSTAIRS: subject was walking upstairs
+WALKING_DOWNSTAIRS: subject was walking downstairs
+SITTING: subject was sitting
+STANDING: subject was standing
+LAYING: subject was laying
+Average of measurements
+All measurements are floating-point values, within the range [-1,1].
+
+Prior to transformation steps, there were many other additional variables such as 
+mad(): Median absolute deviation 
+max(): Largest value in array
+min(): Smallest value in array
+sma(): Signal magnitude area
+energy(): Energy measure. Sum of the squares divided by the number of values. 
+iqr(): Interquartile range 
+entropy(): Signal entropy
+arCoeff(): Autorregresion coefficients with Burg order equal to 4
+correlation(): correlation coefficient between two signals
+maxInds(): index of the frequency component with largest magnitude
+meanFreq(): Weighted average of the frequency components to obtain a mean frequency
+skewness(): skewness of the frequency domain signal 
+kurtosis(): kurtosis of the frequency domain signal 
+bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
+angle(): Angle between to vectors.
+
+The measurements are classified in two domains:
+
+Time-domain signals (variables prefixed by timeDomain), resulting from the capture of accelerometer and gyroscope raw signals.
+
+Frequency-domain signals (variables prefixed by frequencyDomain), resulting from the application of a Fast Fourier Transform (FFT) to some of the time-domain signals.
+
+Time-domain signals
+
+timeDomainBodyAccelerometerMeanX,Y,Z
+timeDomainBodyAccelerometerStandardDeviationX,Y,Z
+timeDomainGravityAccelerometerMeanX,Y,Z
+timeDomainGravityAccelerometerStandardDeviationX,Y,Z
+timeDomainBodyAccelerometerJerkMeanX,Y,Z
+timeDomainBodyAccelerometerJerkStandardDeviationX,Y,Z
+timeDomainBodyGyroscopeMeanX,Y,Z
+timeDomainBodyGyroscopeStandardDeviationX,Y,Z
+timeDomainBodyGyroscopeJerkMeanX,Y,Z
+timeDomainBodyGyroscopeJerkStandardDeviationX,Y,Z
+timeDomainBodyAccelerometerMagnitudeMean
+timeDomainBodyAccelerometerMagnitudeStandardDeviation
+timeDomainGravityAccelerometerMagnitudeMean
+timeDomainGravityAccelerometerMagnitudeStandardDeviation
+timeDomainBodyAccelerometerJerkMagnitudeMean
+timeDomainBodyAccelerometerJerkMagnitudeStandardDeviation
+timeDomainBodyGyroscopeMagnitudeMean
+timeDomainBodyGyroscopeMagnitudeStandardDeviation
+timeDomainBodyGyroscopeJerkMagnitudeMean
+timeDomainBodyGyroscopeJerkMagnitudeStandardDeviation
+
+Frequency-domain signals
+
+frequencyDomainBodyAccelerometerMeanX,Y,Z
+frequencyDomainBodyAccelerometerStandardDeviationX,Y,Z
+frequencyDomainBodyAccelerometerMeanFrequencyX,Y,Z
+frequencyDomainBodyAccelerometerJerkMeanX,Y,Z
+frequencyDomainBodyAccelerometerJerkStandardDeviationX,Y,Z
+frequencyDomainBodyAccelerometerJerkMeanFrequencyX,Y,Z
+frequencyDomainBodyGyroscopeMeanX,Y,Z
+frequencyDomainBodyGyroscopeStandardDeviationX,Y,Z
+frequencyDomainBodyGyroscopeMeanFrequencyX,Y,Z
+frequencyDomainBodyAccelerometerMagnitudeMean
+frequencyDomainBodyAccelerometerMagnitudeStandardDeviation
+frequencyDomainBodyAccelerometerMagnitudeMeanFrequency
+frequencyDomainBodyAccelerometerJerkMagnitudeMean
+frequencyDomainBodyAccelerometerJerkMagnitudeStandardDeviation
+frequencyDomainBodyAccelerometerJerkMagnitudeMeanFrequency
+frequencyDomainBodyGyroscopeMagnitudeMean
+frequencyDomainBodyGyroscopeMagnitudeStandardDeviation
+frequencyDomainBodyGyroscopeMagnitudeMeanFrequency
+frequencyDomainBodyGyroscopeJerkMagnitudeMean
+frequencyDomainBodyGyroscopeJerkMagnitudeStandardDeviation
+frequencyDomainBodyGyroscopeJerkMagnitudeMeanFrequency
+
+Transformations
+
+The zip file containing the source data is located at https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip.
+
+The following transformations were applied to the source data:
+
+The training and test sets were merged to create one data set.
+The measurements on the mean and standard deviation (i.e. signals containing the strings mean and std) were extracted for each measurement, and the others were discarded.
+The activity identifiers (originally coded as integers between 1 and 6) were replaced with descriptive activity names (see Identifiers section).
+The variable names were replaced with descriptive variable names (e.g. tBodyAcc-mean()-X was expanded to timeDomainBodyAccelerometerMeanX), using the following set of rules:
+Special characters (i.e. (, ), and -) were removed
+The initial f and t were expanded to frequencyDomain and timeDomain respectively.
+Acc, Gyro, Mag, Freq, mean, and std were replaced with Accelerometer, Gyroscope, Magnitude, Frequency, Mean, and StandardDeviation respectively.
+Replaced (supposedly incorrect as per source's features_info.txt file) BodyBody with Body.
+From the data set in step 4, the final data set was created with the average of each variable for each activity and each subject.
+The collection of the source data and the transformations listed above were implemented by the run_analysis.R R script (see README.md file for usage instructions).
